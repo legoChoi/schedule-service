@@ -18,13 +18,9 @@ import javax.sql.DataSource;
 public class UserJdbcRepository implements UserRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final SimpleJdbcInsert jdbcInsert;
 
     public UserJdbcRepository(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        this.jdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName("USERS")
-                .usingGeneratedKeyColumns("user_id");
     }
 
     @Override
