@@ -1,4 +1,4 @@
-package sparta.scheduleservice.repository.dto.response;
+package sparta.scheduleservice.repository.dto.schedule.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,14 +9,14 @@ public class CreateScheduleResponseDto {
     private int scheduleId;
     private int userId;
     private String schedulePassword;
-    private String title;
+    private String writer;
     private String contents;
 
-    public CreateScheduleResponseDto(int scheduleId, int userId, String schedulePassword, String title, String contents) {
+    public CreateScheduleResponseDto(int scheduleId, int userId, String schedulePassword, String writer, String contents) {
         this.scheduleId = scheduleId;
         this.userId = userId;
         this.schedulePassword = schedulePassword;
-        this.title = title;
+        this.writer = writer;
         this.contents = contents;
     }
 }

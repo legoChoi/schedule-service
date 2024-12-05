@@ -1,4 +1,4 @@
-package sparta.scheduleservice.repository.dto.request;
+package sparta.scheduleservice.repository.dto.schedule.request;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +8,6 @@ public class CreateScheduleRequestDto {
 
     private int userId;
     private String schedulePassword;
-    private String title;
+    private String writer;
     private String contents;
 }

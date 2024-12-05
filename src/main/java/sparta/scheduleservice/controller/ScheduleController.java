@@ -3,10 +3,11 @@ package sparta.scheduleservice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import sparta.scheduleservice.repository.dto.request.CreateScheduleRequestDto;
-import sparta.scheduleservice.repository.dto.request.FetchScheduleListConditionDto;
-import sparta.scheduleservice.repository.dto.response.CreateScheduleResponseDto;
-import sparta.scheduleservice.repository.dto.response.FetchScheduleResponseDto;
+import sparta.scheduleservice.repository.dto.schedule.request.CreateScheduleRequestDto;
+import sparta.scheduleservice.repository.dto.schedule.request.FetchScheduleListConditionDto;
+import sparta.scheduleservice.repository.dto.schedule.request.UpdateScheduleRequestDto;
+import sparta.scheduleservice.repository.dto.schedule.response.CreateScheduleResponseDto;
+import sparta.scheduleservice.repository.dto.schedule.response.FetchScheduleResponseDto;
 import sparta.scheduleservice.service.ScheduleService;
 
 import java.util.List;
@@ -22,6 +23,11 @@ public class ScheduleController {
     @PostMapping
     public CreateScheduleResponseDto createSchedule(@RequestBody CreateScheduleRequestDto createScheduleRequestDto) {
         return this.scheduleService.createSchedule(createScheduleRequestDto);
+    }
+
+    @PatchMapping("/{scheduleId}")
+    public int updateSchedule(@PathVariable("scheduleId") int scheduleId, @RequestBody UpdateScheduleRequestDto updateScheduleRequestDto) {
+        return this.scheduleService.updateSchedule(scheduleId, updateScheduleRequestDto);
     }
 
     @GetMapping("/{scheduleId}")
