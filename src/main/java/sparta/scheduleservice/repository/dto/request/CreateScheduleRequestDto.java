@@ -8,6 +8,6 @@ public class CreateScheduleRequestDto {
 
     private int userId;
     private String schedulePassword;
-    private String title;
+    private String writer;
     private String contents;
 }

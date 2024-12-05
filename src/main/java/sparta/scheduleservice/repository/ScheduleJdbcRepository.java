@@ -33,8 +33,8 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     @Override
     public CreateScheduleResponseDto save(CreateScheduleRequestDto createScheduleRequestDto) {
         String sql = "INSERT INTO " +
-                "schedules(user_id, schedule_password, title, contents) " +
-                "VALUES (:userId, :schedulePassword, :title, :contents)";
+                "schedules(user_id, schedule_password, writer, contents) " +
+                "VALUES (:userId, :schedulePassword, :writer, :contents)";
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(createScheduleRequestDto);
         KeyHolder key = new GeneratedKeyHolder();
@@ -44,7 +44,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
                 key.getKey().intValue(),
                 createScheduleRequestDto.getUserId(),
                 createScheduleRequestDto.getSchedulePassword(),
-                createScheduleRequestDto.getTitle(),
+                createScheduleRequestDto.getWriter(),
                 createScheduleRequestDto.getContents()
         );
     }
