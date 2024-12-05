@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import sparta.scheduleservice.repository.dto.request.CreateScheduleRequestDto;
 import sparta.scheduleservice.repository.dto.request.FetchScheduleListConditionDto;
+import sparta.scheduleservice.repository.dto.request.UpdateScheduleRequestDto;
 import sparta.scheduleservice.repository.dto.response.CreateScheduleResponseDto;
 import sparta.scheduleservice.repository.dto.response.FetchScheduleResponseDto;
 
@@ -31,7 +32,8 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
 
     @Override
     public CreateScheduleResponseDto save(CreateScheduleRequestDto createScheduleRequestDto) {
-        String sql = "INSERT INTO schedules(user_id, schedule_password, title, contents) " +
+        String sql = "INSERT INTO " +
+                "schedules(user_id, schedule_password, title, contents) " +
                 "VALUES (:userId, :schedulePassword, :title, :contents)";
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(createScheduleRequestDto);
@@ -45,6 +47,23 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
                 createScheduleRequestDto.getTitle(),
                 createScheduleRequestDto.getContents()
         );
+    }
+
+    @Override
+    public int update(int scheduleId, UpdateScheduleRequestDto updateScheduleRequestDto) {
+        String sql = "UPDATE schedules s " +
+                "INNER JOIN users u ON s.user_id = u.user_id " +
+                "SET u.user_name = :userName, " +
+                "s.contents = :contents " +
+                "WHERE s.schedule_id = :scheduleId AND s.schedule_password LIKE :schedulePassword";
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userName", updateScheduleRequestDto.getUserName())
+                .addValue("contents", updateScheduleRequestDto.getContents())
+                .addValue("scheduleId", scheduleId)
+                .addValue("schedulePassword", updateScheduleRequestDto.getSchedulePassword());
+
+        return jdbcTemplate.update(sql, param);
     }
 
     @Override
