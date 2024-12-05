@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import sparta.scheduleservice.repository.dto.schedule.request.CreateScheduleRequestDto;
+import sparta.scheduleservice.repository.dto.schedule.request.DeleteScheduleRequestDto;
 import sparta.scheduleservice.repository.dto.schedule.request.FetchScheduleListConditionDto;
 import sparta.scheduleservice.repository.dto.schedule.request.UpdateScheduleRequestDto;
 import sparta.scheduleservice.repository.dto.schedule.response.CreateScheduleResponseDto;
@@ -38,5 +39,10 @@ public class ScheduleController {
     @GetMapping
     public List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
         return this.scheduleService.fetchAll(fetchScheduleListConditionDto);
+    }
+
+    @DeleteMapping("/{scheduleId}")
+    public int deleteSchedule(@PathVariable("scheduleId") int scheduleId, @RequestBody DeleteScheduleRequestDto deleteScheduleRequestDto) {
+        return this.scheduleService.deleteSchedule(scheduleId, deleteScheduleRequestDto);
     }
 }
