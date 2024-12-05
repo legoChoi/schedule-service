@@ -3,8 +3,8 @@ package sparta.scheduleservice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import sparta.scheduleservice.repository.dto.request.CreateUserRequestDto;
-import sparta.scheduleservice.repository.dto.response.CreateUserResponseDto;
+import sparta.scheduleservice.repository.dto.user.request.CreateUserRequestDto;
+import sparta.scheduleservice.repository.dto.user.response.CreateUserResponseDto;
 import sparta.scheduleservice.service.UserService;
 
 @Slf4j

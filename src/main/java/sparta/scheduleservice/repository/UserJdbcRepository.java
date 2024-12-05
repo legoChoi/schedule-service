@@ -4,12 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import sparta.scheduleservice.repository.dto.request.CreateUserRequestDto;
-import sparta.scheduleservice.repository.dto.response.CreateUserResponseDto;
+import sparta.scheduleservice.repository.dto.user.request.CreateUserRequestDto;
+import sparta.scheduleservice.repository.dto.user.response.CreateUserResponseDto;
 
 import javax.sql.DataSource;
 
