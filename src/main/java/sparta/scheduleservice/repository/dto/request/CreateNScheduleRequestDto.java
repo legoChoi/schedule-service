@@ -1,14 +1,13 @@
 package sparta.scheduleservice.repository.dto.request;
 
-
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter @Setter
-@ToString
-public class CreateUserRequestDto {
+public class CreateNScheduleRequestDto {
 
     private String userName;
-    private String userEmail;
+    private String schedulePassword;
+    private String title;
+    private String contents;
 }
