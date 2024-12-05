@@ -7,4 +7,5 @@ import lombok.Setter;
 public class FetchScheduleListConditionDto {
     private String writer;
     private String updatedAt;
+    private String userId;
 }
