@@ -9,18 +9,16 @@ import java.time.LocalDateTime;
 public class FetchScheduleResponseDto {
 
     private int scheduleId;
-    private String userName;
-    private String title;
+    private String writer;
     private String contents;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public FetchScheduleResponseDto() { }
 
-    public FetchScheduleResponseDto(int scheduleId, String userName, String title, String contents, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public FetchScheduleResponseDto(int scheduleId, String writer, String contents, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.scheduleId = scheduleId;
-        this.userName = userName;
-        this.title = title;
+        this.writer = writer;
         this.contents = contents;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

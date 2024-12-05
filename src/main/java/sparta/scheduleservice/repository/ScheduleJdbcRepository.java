@@ -51,14 +51,12 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
 
     @Override
     public int update(int scheduleId, UpdateScheduleRequestDto updateScheduleRequestDto) {
-        String sql = "UPDATE schedules s " +
-                "INNER JOIN users u ON s.user_id = u.user_id " +
-                "SET u.user_name = :userName, " +
-                "s.contents = :contents " +
-                "WHERE s.schedule_id = :scheduleId AND s.schedule_password LIKE :schedulePassword";
+        String sql = "UPDATE schedules " +
+                "SET writer = :writer, contents = :contents " +
+                "WHERE schedule_id = :scheduleId AND schedule_password LIKE :schedulePassword";
 
         SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("userName", updateScheduleRequestDto.getUserName())
+                .addValue("writer", updateScheduleRequestDto.getWriter())
                 .addValue("contents", updateScheduleRequestDto.getContents())
                 .addValue("scheduleId", scheduleId)
                 .addValue("schedulePassword", updateScheduleRequestDto.getSchedulePassword());
@@ -69,15 +67,13 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     @Override
     public FetchScheduleResponseDto fetchOne(int scheduleId) {
         String sql = "SELECT " +
-                "s.schedule_id AS scheduleId, " +
-                "u.user_name AS userName, " +
-                "s.title AS title, " +
-                "s.contents AS contents, " +
-                "s.created_at AS createdAt, " +
-                "s.updated_at AS updatedAt " +
-                "FROM schedules s " +
-                "INNER JOIN users u ON s.user_id = u.user_id " +
-                "WHERE s.schedule_id = :scheduleId";
+                "schedule_id, " +
+                "writer, " +
+                "contents, " +
+                "created_at, " +
+                "updated_at " +
+                "FROM schedules " +
+                "WHERE schedule_id = :scheduleId";
 
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("scheduleId", scheduleId);
@@ -92,7 +88,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
 
     @Override
     public List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
-        String userName = fetchScheduleListConditionDto.getUserName();
+        String writer = fetchScheduleListConditionDto.getWriter();
         String updatedAt = fetchScheduleListConditionDto.getUpdatedAt();
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(fetchScheduleListConditionDto);
@@ -102,14 +98,14 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         Boolean flag = false;
 
         // 둘 중 하나라도 있으면 where 절 추가
-        if (StringUtils.hasText(userName) || StringUtils.hasText(updatedAt)) {
+        if (StringUtils.hasText(writer) || StringUtils.hasText(updatedAt)) {
             whereSql += "WHERE ";
         }
 
 
-        // userName 있으면 조건에 추가
-        if (StringUtils.hasText(userName)) {
-            whereSql += "u.user_name LIKE CONCAT('%', :userName, '%') ";
+        // writer 있으면 조건에 추가
+        if (StringUtils.hasText(writer)) {
+            whereSql += "writer LIKE CONCAT('%', :writer, '%') ";
             flag = true;
         }
 
@@ -118,20 +114,18 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
             if (flag) {
                 whereSql += "AND ";
             }
-            whereSql += "DATE(s.updated_at) = :updatedAt ";
+            whereSql += "DATE(updated_at) = :updatedAt ";
         }
 
         String sql = "SELECT " +
-                "s.schedule_id AS scheduleId, " +
-                "u.user_name AS userName, " +
-                "s.title AS title, " +
-                "s.contents AS contents, " +
-                "s.created_at AS createdAt, " +
-                "s.updated_at AS updatedAt " +
-                "FROM schedules s " +
-                "INNER JOIN users u ON s.user_id = u.user_id " +
+                "schedule_id, " +
+                "writer, " +
+                "contents, " +
+                "created_at, " +
+                "updated_at " +
+                "FROM schedules " +
                 whereSql +
-                "ORDER BY s.updated_at DESC";
+                "ORDER BY updated_at DESC";
 
         RowMapper<FetchScheduleResponseDto> rowMapper = BeanPropertyRowMapper
                 .newInstance(FetchScheduleResponseDto.class);

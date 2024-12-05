@@ -8,5 +8,5 @@ public class UpdateScheduleRequestDto {
 
     private String schedulePassword;
     private String contents;
-    private String userName;
+    private String writer;
 }
