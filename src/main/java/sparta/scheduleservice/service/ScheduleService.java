@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sparta.scheduleservice.repository.ScheduleRepository;
 import sparta.scheduleservice.repository.dto.schedule.request.CreateScheduleRequestDto;
+import sparta.scheduleservice.repository.dto.schedule.request.DeleteScheduleRequestDto;
 import sparta.scheduleservice.repository.dto.schedule.request.FetchScheduleListConditionDto;
 import sparta.scheduleservice.repository.dto.schedule.request.UpdateScheduleRequestDto;
 import sparta.scheduleservice.repository.dto.schedule.response.CreateScheduleResponseDto;
@@ -31,5 +32,9 @@ public class ScheduleService {
 
     public int updateSchedule(int scheduleId, UpdateScheduleRequestDto updateScheduleRequestDto) {
         return this.scheduleRepository.update(scheduleId, updateScheduleRequestDto);
+    }
+
+    public int deleteSchedule(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto) {
+        return this.scheduleRepository.delete(scheduleId, deleteScheduleRequestDto);
     }
 }

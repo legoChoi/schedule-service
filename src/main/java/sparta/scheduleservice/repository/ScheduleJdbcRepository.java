@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import sparta.scheduleservice.repository.dto.schedule.request.CreateScheduleRequestDto;
+import sparta.scheduleservice.repository.dto.schedule.request.DeleteScheduleRequestDto;
 import sparta.scheduleservice.repository.dto.schedule.request.FetchScheduleListConditionDto;
 import sparta.scheduleservice.repository.dto.schedule.request.UpdateScheduleRequestDto;
 import sparta.scheduleservice.repository.dto.schedule.response.CreateScheduleResponseDto;
@@ -131,5 +132,16 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
                 .newInstance(FetchScheduleResponseDto.class);
 
         return jdbcTemplate.query(sql, param, rowMapper);
+    }
+
+    @Override
+    public int delete(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto) {
+        String sql = "DELETE FROM schedules WHERE schedule_id = :scheduleId AND schedule_password LIKE :schedulePassword";
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("scheduleId", scheduleId)
+                .addValue("schedulePassword", deleteScheduleRequestDto.schedulePassword());
+
+        return jdbcTemplate.update(sql, param);
     }
 }
