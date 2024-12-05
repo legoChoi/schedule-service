@@ -91,6 +91,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     public List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
         String writer = fetchScheduleListConditionDto.getWriter();
         String updatedAt = fetchScheduleListConditionDto.getUpdatedAt();
+        String userId = fetchScheduleListConditionDto.getUserId();
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(fetchScheduleListConditionDto);
 
@@ -98,14 +99,22 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         String whereSql = "";
         Boolean flag = false;
 
-        // 둘 중 하나라도 있으면 where 절 추가
-        if (StringUtils.hasText(writer) || StringUtils.hasText(updatedAt)) {
+        // 셋 중 하나라도 있으면 where 절 추가
+        if (StringUtils.hasText(userId) || StringUtils.hasText(writer) || StringUtils.hasText(updatedAt)) {
             whereSql += "WHERE ";
         }
 
+        // userId가 있으면 조건 추가
+        if (StringUtils.hasText(userId)) {
+            whereSql += "user_id = :userId ";
+            flag = true;
+        }
 
         // writer 있으면 조건에 추가
         if (StringUtils.hasText(writer)) {
+            if (flag) {
+                whereSql += "AND ";
+            }
             whereSql += "writer LIKE CONCAT('%', :writer, '%') ";
             flag = true;
         }
@@ -120,6 +129,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
 
         String sql = "SELECT " +
                 "schedule_id, " +
+                "user_id, " +
                 "writer, " +
                 "contents, " +
                 "created_at, " +
