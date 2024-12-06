@@ -3,8 +3,8 @@ package sparta.scheduleservice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import sparta.scheduleservice.repository.dto.user.request.CreateUserRequestDto;
-import sparta.scheduleservice.repository.dto.user.response.CreateUserResponseDto;
+import sparta.scheduleservice.dto.user.request.CreateUserRequestDto;
+import sparta.scheduleservice.dto.user.response.CreateUserResponseDto;
 import sparta.scheduleservice.service.UserService;
 
 @Slf4j
@@ -16,7 +16,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public CreateUserResponseDto createUser(@RequestBody CreateUserRequestDto createUserDto) {
+    public CreateUserResponseDto createUser(
+            @RequestBody CreateUserRequestDto createUserDto
+    ) {
         return this.userService.createUser(createUserDto);
     }
 }
