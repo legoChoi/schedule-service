@@ -11,12 +11,12 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
-import sparta.scheduleservice.repository.dto.schedule.request.CreateScheduleRequestDto;
-import sparta.scheduleservice.repository.dto.schedule.request.DeleteScheduleRequestDto;
-import sparta.scheduleservice.repository.dto.schedule.request.FetchScheduleListConditionDto;
-import sparta.scheduleservice.repository.dto.schedule.request.UpdateScheduleRequestDto;
-import sparta.scheduleservice.repository.dto.schedule.response.CreateScheduleResponseDto;
-import sparta.scheduleservice.repository.dto.schedule.response.FetchScheduleResponseDto;
+import sparta.scheduleservice.dto.schedule.request.CreateScheduleRequestDto;
+import sparta.scheduleservice.dto.schedule.request.DeleteScheduleRequestDto;
+import sparta.scheduleservice.dto.schedule.request.FetchScheduleListConditionDto;
+import sparta.scheduleservice.dto.schedule.request.UpdateScheduleRequestDto;
+import sparta.scheduleservice.dto.schedule.response.CreateScheduleResponseDto;
+import sparta.scheduleservice.dto.schedule.response.FetchScheduleResponseDto;
 
 import javax.sql.DataSource;
 import java.util.List;

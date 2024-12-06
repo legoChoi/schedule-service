@@ -1,4 +1,4 @@
-package sparta.scheduleservice.repository.dto.schedule.request;
+package sparta.scheduleservice.dto.schedule.request;
 
 import lombok.Getter;
 import lombok.Setter;

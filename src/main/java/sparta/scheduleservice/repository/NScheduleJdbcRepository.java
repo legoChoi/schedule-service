@@ -7,8 +7,8 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import sparta.scheduleservice.repository.dto.request.CreateNScheduleRequestDto;
-import sparta.scheduleservice.repository.dto.response.CreateNScheduleResponseDto;
+import sparta.scheduleservice.dto.nschedule.request.CreateNScheduleRequestDto;
+import sparta.scheduleservice.dto.nschedule.response.CreateNScheduleResponseDto;
 
 import javax.sql.DataSource;
 
