@@ -9,7 +9,7 @@ import sparta.scheduleservice.service.UserService;
 
 @Slf4j
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/apis/users")
 @RequiredArgsConstructor
 public class UserController {
 

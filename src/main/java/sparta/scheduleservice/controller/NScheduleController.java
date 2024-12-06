@@ -12,7 +12,7 @@ import sparta.scheduleservice.service.NScheduleService;
 
 @Slf4j
 @RestController
-@RequestMapping("/nschedule")
+@RequestMapping("/apis/nschedule")
 @RequiredArgsConstructor
 public class NScheduleController {
 
