@@ -91,7 +91,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     public List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
         String writer = fetchScheduleListConditionDto.getWriter();
         String updatedAt = fetchScheduleListConditionDto.getUpdatedAt();
-        String userId = fetchScheduleListConditionDto.getUserId();
+        int userId = fetchScheduleListConditionDto.getUserId();
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(fetchScheduleListConditionDto);
 
@@ -100,12 +100,12 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         Boolean flag = false;
 
         // 셋 중 하나라도 있으면 where 절 추가
-        if (StringUtils.hasText(userId) || StringUtils.hasText(writer) || StringUtils.hasText(updatedAt)) {
+        if (userId != 0 || StringUtils.hasText(writer) || StringUtils.hasText(updatedAt)) {
             whereSql += "WHERE ";
         }
 
         // userId가 있으면 조건 추가
-        if (StringUtils.hasText(userId)) {
+        if (userId != 0) {
             whereSql += "user_id = :userId ";
             flag = true;
         }
