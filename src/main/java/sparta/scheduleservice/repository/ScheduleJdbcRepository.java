@@ -1,6 +1,7 @@
 package sparta.scheduleservice.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -88,7 +89,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
+    public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
         String writer = fetchScheduleListConditionDto.getWriter();
         String updatedAt = fetchScheduleListConditionDto.getUpdatedAt();
         int userId = fetchScheduleListConditionDto.getUserId();
@@ -141,7 +142,10 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         RowMapper<FetchScheduleResponseDto> rowMapper = BeanPropertyRowMapper
                 .newInstance(FetchScheduleResponseDto.class);
 
-        return jdbcTemplate.query(sql, param, rowMapper);
+        List<FetchScheduleResponseDto> result = jdbcTemplate.query(sql, param, rowMapper);
+        return ResponseEntity
+                .ok()
+                .body(result);
     }
 
     @Override

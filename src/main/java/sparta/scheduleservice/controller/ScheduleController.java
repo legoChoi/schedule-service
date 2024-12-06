@@ -2,6 +2,7 @@ package sparta.scheduleservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sparta.scheduleservice.dto.schedule.request.CreateScheduleRequestDto;
 import sparta.scheduleservice.dto.schedule.request.DeleteScheduleRequestDto;
@@ -44,7 +45,7 @@ public class ScheduleController {
     }
 
     @GetMapping
-    public List<FetchScheduleResponseDto> fetchAll(
+    public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(
             FetchScheduleListConditionDto fetchScheduleListConditionDto
     ) {
         return this.scheduleService.fetchAll(fetchScheduleListConditionDto);

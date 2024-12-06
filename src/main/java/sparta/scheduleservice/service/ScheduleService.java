@@ -1,6 +1,7 @@
 package sparta.scheduleservice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sparta.scheduleservice.repository.ScheduleRepository;
 import sparta.scheduleservice.dto.schedule.request.CreateScheduleRequestDto;
@@ -26,7 +27,7 @@ public class ScheduleService {
         return this.scheduleRepository.fetchOne(scheduleId);
     }
 
-    public List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
+    public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
         return this.scheduleRepository.fetchAll(fetchScheduleListConditionDto);
     }
 
