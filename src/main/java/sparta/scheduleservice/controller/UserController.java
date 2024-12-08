@@ -1,5 +1,6 @@
 package sparta.scheduleservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class UserController {
 
     @PostMapping
     public CreateUserResponseDto createUser(
-            @RequestBody CreateUserRequestDto createUserDto
+            @Valid @RequestBody CreateUserRequestDto createUserDto
     ) {
         return this.userService.createUser(createUserDto);
     }
