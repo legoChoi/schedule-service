@@ -1,13 +1,11 @@
 package sparta.scheduleservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sparta.scheduleservice.dto.schedule.request.CreateScheduleRequestDto;
-import sparta.scheduleservice.dto.schedule.request.DeleteScheduleRequestDto;
-import sparta.scheduleservice.dto.schedule.request.FetchScheduleListConditionDto;
-import sparta.scheduleservice.dto.schedule.request.UpdateScheduleRequestDto;
+import sparta.scheduleservice.dto.schedule.request.*;
 import sparta.scheduleservice.dto.schedule.response.CreateScheduleResponseDto;
 import sparta.scheduleservice.dto.schedule.response.FetchScheduleResponseDto;
 import sparta.scheduleservice.service.ScheduleService;
@@ -57,5 +55,13 @@ public class ScheduleController {
             @RequestBody DeleteScheduleRequestDto deleteScheduleRequestDto
     ) {
         return this.scheduleService.deleteSchedule(scheduleId, deleteScheduleRequestDto);
+    }
+
+    @GetMapping("/paginate")
+    public ResponseEntity<List<FetchScheduleResponseDto>> paginateSchedule(
+            @Valid PaginateRequestDto paginateRequestDto
+    ) {
+
+        return this.scheduleService.paginateSchedule(paginateRequestDto);
     }
 }
