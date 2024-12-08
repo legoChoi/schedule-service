@@ -1,9 +1,11 @@
 package sparta.scheduleservice.dto.schedule.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
+@AllArgsConstructor
 public class CreateScheduleResponseDto {
 
     private int scheduleId;
@@ -11,12 +13,4 @@ public class CreateScheduleResponseDto {
     private String schedulePassword;
     private String writer;
     private String contents;
-
-    public CreateScheduleResponseDto(int scheduleId, int userId, String schedulePassword, String writer, String contents) {
-        this.scheduleId = scheduleId;
-        this.userId = userId;
-        this.schedulePassword = schedulePassword;
-        this.writer = writer;
-        this.contents = contents;
-    }
 }
