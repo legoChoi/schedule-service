@@ -8,11 +8,11 @@ import sparta.scheduleservice.dto.schedule.response.FetchScheduleResponseDto;
 import java.util.List;
 
 public interface ScheduleRepository {
-    ResponseEntity<CreateScheduleResponseDto> save(CreateScheduleRequestDto createScheduleRequestDto);
-    ResponseEntity<FetchScheduleResponseDto> fetchOne(int scheduleId);
-    ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto);
+    CreateScheduleResponseDto save(CreateScheduleRequestDto createScheduleRequestDto);
+    FetchScheduleResponseDto fetchOne(int scheduleId);
+    List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto);
     int update(int scheduleId, UpdateScheduleRequestDto updateScheduleRequestDto);
     int delete(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto);
-    ResponseEntity<List<FetchScheduleResponseDto>> paginate(PaginateRequestDto paginateRequestDto);
+    List<FetchScheduleResponseDto> paginate(PaginateRequestDto paginateRequestDto);
     String getSchedulePw(int scheduleId);
 }

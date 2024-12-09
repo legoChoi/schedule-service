@@ -34,7 +34,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public ResponseEntity<CreateScheduleResponseDto> save(CreateScheduleRequestDto createScheduleRequestDto) {
+    public CreateScheduleResponseDto save(CreateScheduleRequestDto createScheduleRequestDto) {
         String sql = "INSERT INTO " +
                 "schedules(user_id, schedule_password, writer, contents) " +
                 "VALUES (:userId, :schedulePassword, :writer, :contents)";
@@ -51,9 +51,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
                 createScheduleRequestDto.getContents()
         );
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED.value())
-                .body(createScheduleResponseDto);
+        return createScheduleResponseDto;
     }
 
     @Override
@@ -82,7 +80,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public ResponseEntity<FetchScheduleResponseDto> fetchOne(int scheduleId) {
+    public FetchScheduleResponseDto fetchOne(int scheduleId) {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
                 "s.user_id AS userId, " +
@@ -102,18 +100,14 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
                 .newInstance(FetchScheduleResponseDto.class);
 
         try {
-            FetchScheduleResponseDto fetchScheduleResponseDto = jdbcTemplate.queryForObject(sql, param, rowMapper);
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(fetchScheduleResponseDto);
+            return jdbcTemplate.queryForObject(sql, param, rowMapper);
         } catch (EmptyResultDataAccessException e) {
             throw new ScheduleNotFoundException();
         }
     }
 
     @Override
-    public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
+    public List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
         String writer = fetchScheduleListConditionDto.getWriter();
         String updatedAt = fetchScheduleListConditionDto.getUpdatedAt();
         Integer userId = fetchScheduleListConditionDto.getUserId();
@@ -168,15 +162,11 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         RowMapper<FetchScheduleResponseDto> rowMapper = BeanPropertyRowMapper
                 .newInstance(FetchScheduleResponseDto.class);
 
-        List<FetchScheduleResponseDto> result = jdbcTemplate.query(sql, param, rowMapper);
-
-        return ResponseEntity
-                .ok()
-                .body(result);
+        return jdbcTemplate.query(sql, param, rowMapper);
     }
 
     @Override
-    public ResponseEntity<List<FetchScheduleResponseDto>> paginate(PaginateRequestDto paginateRequestDto) {
+    public List<FetchScheduleResponseDto> paginate(PaginateRequestDto paginateRequestDto) {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
                 "s.user_id AS userId, " +
@@ -195,11 +185,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         RowMapper<FetchScheduleResponseDto> rowMapper = BeanPropertyRowMapper
                 .newInstance(FetchScheduleResponseDto.class);
 
-        List<FetchScheduleResponseDto> result = jdbcTemplate.query(sql, param, rowMapper);
-
-        return ResponseEntity
-                .ok()
-                .body(result);
+        return jdbcTemplate.query(sql, param, rowMapper);
     }
 
     @Override

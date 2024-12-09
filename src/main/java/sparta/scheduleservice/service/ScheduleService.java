@@ -20,15 +20,15 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
-    public ResponseEntity<CreateScheduleResponseDto> createSchedule(CreateScheduleRequestDto createScheduleRequestDto) {
+    public CreateScheduleResponseDto createSchedule(CreateScheduleRequestDto createScheduleRequestDto) {
         return this.scheduleRepository.save(createScheduleRequestDto);
     }
 
-    public ResponseEntity<FetchScheduleResponseDto> fetchOne(int scheduleId) {
+    public FetchScheduleResponseDto fetchOne(int scheduleId) {
         return this.scheduleRepository.fetchOne(scheduleId);
     }
 
-    public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
+    public List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
         return this.scheduleRepository.fetchAll(fetchScheduleListConditionDto);
     }
 
@@ -68,7 +68,7 @@ public class ScheduleService {
         throw new PasswordMismatchException();
     }
 
-    public ResponseEntity<List<FetchScheduleResponseDto>> paginateSchedule(PaginateRequestDto paginateRequestDto) {
+    public List<FetchScheduleResponseDto> paginateSchedule(PaginateRequestDto paginateRequestDto) {
         return this.scheduleRepository.paginate(paginateRequestDto);
     }
 }

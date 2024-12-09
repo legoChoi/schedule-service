@@ -3,6 +3,7 @@ package sparta.scheduleservice.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sparta.scheduleservice.dto.schedule.request.*;
@@ -23,20 +24,22 @@ public class ScheduleController {
     /**
      * 일정 생성
      * @param createScheduleRequestDto
-     * @return
      */
     @PostMapping
     public ResponseEntity<CreateScheduleResponseDto> createSchedule(
             @Valid @RequestBody CreateScheduleRequestDto createScheduleRequestDto
     ) {
-        return this.scheduleService.createSchedule(createScheduleRequestDto);
+        CreateScheduleResponseDto data = this.scheduleService.createSchedule(createScheduleRequestDto);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED.value())
+                .body(data);
     }
 
     /**
      * 일정 수정
      * @param scheduleId
      * @param updateScheduleRequestDto
-     * @return
      */
     @PatchMapping("/{scheduleId}")
     public int updateSchedule(
@@ -49,13 +52,16 @@ public class ScheduleController {
     /**
      * 일정 조회 (단건)
      * @param scheduleId
-     * @return
      */
     @GetMapping("/{scheduleId}")
     public ResponseEntity<FetchScheduleResponseDto> fetchOne(
             @PathVariable("scheduleId") int scheduleId
     ) {
-        return this.scheduleService.fetchOne(scheduleId);
+        FetchScheduleResponseDto data = this.scheduleService.fetchOne(scheduleId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(data);
     }
 
     /**
@@ -67,7 +73,11 @@ public class ScheduleController {
     public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(
             FetchScheduleListConditionDto fetchScheduleListConditionDto
     ) {
-        return this.scheduleService.fetchAll(fetchScheduleListConditionDto);
+        List<FetchScheduleResponseDto> data = this.scheduleService.fetchAll(fetchScheduleListConditionDto);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(data);
     }
 
     /**
@@ -93,6 +103,10 @@ public class ScheduleController {
     public ResponseEntity<List<FetchScheduleResponseDto>> paginateSchedule(
             @Valid PaginateRequestDto paginateRequestDto
     ) {
-        return this.scheduleService.paginateSchedule(paginateRequestDto);
+        List<FetchScheduleResponseDto> data = this.scheduleService.paginateSchedule(paginateRequestDto);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(data);
     }
 }
