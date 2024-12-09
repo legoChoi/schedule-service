@@ -4,12 +4,12 @@ package sparta.scheduleservice.shared.exception.schedule.exception;
 import lombok.Getter;
 
 @Getter
-public enum ErrorMessages {
+public enum ScheduleExceptionMessages {
     PASSWORD_MISMATCH("일정 비밀번호가 일치하지 않습니다.");
 
     private final String errorMessage;
 
-    ErrorMessages(String errorMessage) {
+    ScheduleExceptionMessages(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 }
