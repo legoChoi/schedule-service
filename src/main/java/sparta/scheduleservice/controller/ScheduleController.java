@@ -3,6 +3,7 @@ package sparta.scheduleservice.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sparta.scheduleservice.dto.schedule.request.*;
@@ -29,7 +30,11 @@ public class ScheduleController {
     public ResponseEntity<CreateScheduleResponseDto> createSchedule(
             @Valid @RequestBody CreateScheduleRequestDto createScheduleRequestDto
     ) {
-        return this.scheduleService.createSchedule(createScheduleRequestDto);
+        CreateScheduleResponseDto data = this.scheduleService.createSchedule(createScheduleRequestDto);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED.value())
+                .body(data);
     }
 
     /**

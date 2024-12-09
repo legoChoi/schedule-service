@@ -34,7 +34,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public ResponseEntity<CreateScheduleResponseDto> save(CreateScheduleRequestDto createScheduleRequestDto) {
+    public CreateScheduleResponseDto save(CreateScheduleRequestDto createScheduleRequestDto) {
         String sql = "INSERT INTO " +
                 "schedules(user_id, schedule_password, writer, contents) " +
                 "VALUES (:userId, :schedulePassword, :writer, :contents)";
@@ -51,9 +51,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
                 createScheduleRequestDto.getContents()
         );
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED.value())
-                .body(createScheduleResponseDto);
+        return createScheduleResponseDto;
     }
 
     @Override

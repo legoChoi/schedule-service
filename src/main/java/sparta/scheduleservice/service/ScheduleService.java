@@ -20,7 +20,7 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
-    public ResponseEntity<CreateScheduleResponseDto> createSchedule(CreateScheduleRequestDto createScheduleRequestDto) {
+    public CreateScheduleResponseDto createSchedule(CreateScheduleRequestDto createScheduleRequestDto) {
         return this.scheduleRepository.save(createScheduleRequestDto);
     }
 
