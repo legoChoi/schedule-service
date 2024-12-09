@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
 @AllArgsConstructor
 public class ValidExceptionDto {
     private int code;
