@@ -24,7 +24,6 @@ public class ScheduleController {
     /**
      * 일정 생성
      * @param createScheduleRequestDto
-     * @return
      */
     @PostMapping
     public ResponseEntity<CreateScheduleResponseDto> createSchedule(
@@ -41,7 +40,6 @@ public class ScheduleController {
      * 일정 수정
      * @param scheduleId
      * @param updateScheduleRequestDto
-     * @return
      */
     @PatchMapping("/{scheduleId}")
     public int updateSchedule(
@@ -54,13 +52,16 @@ public class ScheduleController {
     /**
      * 일정 조회 (단건)
      * @param scheduleId
-     * @return
      */
     @GetMapping("/{scheduleId}")
     public ResponseEntity<FetchScheduleResponseDto> fetchOne(
             @PathVariable("scheduleId") int scheduleId
     ) {
-        return this.scheduleService.fetchOne(scheduleId);
+        FetchScheduleResponseDto data = this.scheduleService.fetchOne(scheduleId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(data);
     }
 
     /**

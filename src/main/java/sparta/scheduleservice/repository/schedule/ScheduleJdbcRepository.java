@@ -80,7 +80,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public ResponseEntity<FetchScheduleResponseDto> fetchOne(int scheduleId) {
+    public FetchScheduleResponseDto fetchOne(int scheduleId) {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
                 "s.user_id AS userId, " +
@@ -100,11 +100,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
                 .newInstance(FetchScheduleResponseDto.class);
 
         try {
-            FetchScheduleResponseDto fetchScheduleResponseDto = jdbcTemplate.queryForObject(sql, param, rowMapper);
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(fetchScheduleResponseDto);
+            return jdbcTemplate.queryForObject(sql, param, rowMapper);
         } catch (EmptyResultDataAccessException e) {
             throw new ScheduleNotFoundException();
         }

@@ -24,7 +24,7 @@ public class ScheduleService {
         return this.scheduleRepository.save(createScheduleRequestDto);
     }
 
-    public ResponseEntity<FetchScheduleResponseDto> fetchOne(int scheduleId) {
+    public FetchScheduleResponseDto fetchOne(int scheduleId) {
         return this.scheduleRepository.fetchOne(scheduleId);
     }
 
