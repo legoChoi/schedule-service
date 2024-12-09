@@ -1,13 +1,23 @@
 package sparta.scheduleservice.dto.schedule.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
 public class CreateScheduleRequestDto {
 
+    @Positive
     private int userId;
+
+    @NotBlank
     private String schedulePassword;
+
+    @NotBlank @Size(min = 2, max = 15)
     private String writer;
+
+    @NotBlank @Size(min = 10, max = 200)
     private String contents;
 }

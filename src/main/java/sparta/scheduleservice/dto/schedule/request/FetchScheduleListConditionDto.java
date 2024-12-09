@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class FetchScheduleListConditionDto {
+
     private String userName;
     private String updatedAt;
     private int userId;

@@ -1,4 +1,12 @@
 package sparta.scheduleservice.dto.schedule.request;
 
-public record DeleteScheduleRequestDto(String schedulePassword) {
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
+public class DeleteScheduleRequestDto {
+
+    @NotBlank
+    private String schedulePassword;
 }

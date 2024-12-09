@@ -154,7 +154,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
 
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("scheduleId", scheduleId)
-                .addValue("schedulePassword", deleteScheduleRequestDto.schedulePassword());
+                .addValue("schedulePassword", deleteScheduleRequestDto.getSchedulePassword());
 
         return jdbcTemplate.update(sql, param);
     }

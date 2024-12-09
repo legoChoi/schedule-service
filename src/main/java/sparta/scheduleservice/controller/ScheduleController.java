@@ -1,6 +1,7 @@
 package sparta.scheduleservice.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +23,15 @@ public class ScheduleController {
 
     @PostMapping
     public CreateScheduleResponseDto createSchedule(
-            @RequestBody CreateScheduleRequestDto createScheduleRequestDto
+            @Valid @RequestBody CreateScheduleRequestDto createScheduleRequestDto
     ) {
         return this.scheduleService.createSchedule(createScheduleRequestDto);
     }
 
     @PatchMapping("/{scheduleId}")
     public int updateSchedule(
-            @PathVariable("scheduleId") int scheduleId,
-            @RequestBody UpdateScheduleRequestDto updateScheduleRequestDto
+            @Positive @PathVariable("scheduleId") int scheduleId,
+            @Valid @RequestBody UpdateScheduleRequestDto updateScheduleRequestDto
     ) {
         return this.scheduleService.updateSchedule(scheduleId, updateScheduleRequestDto);
     }
@@ -52,7 +53,7 @@ public class ScheduleController {
     @DeleteMapping("/{scheduleId}")
     public int deleteSchedule(
             @PathVariable("scheduleId") int scheduleId,
-            @RequestBody DeleteScheduleRequestDto deleteScheduleRequestDto
+            @Valid @RequestBody DeleteScheduleRequestDto deleteScheduleRequestDto
     ) {
         return this.scheduleService.deleteSchedule(scheduleId, deleteScheduleRequestDto);
     }
@@ -61,7 +62,6 @@ public class ScheduleController {
     public ResponseEntity<List<FetchScheduleResponseDto>> paginateSchedule(
             @Valid PaginateRequestDto paginateRequestDto
     ) {
-
         return this.scheduleService.paginateSchedule(paginateRequestDto);
     }
 }
