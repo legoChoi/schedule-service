@@ -14,7 +14,7 @@ public class CreateScheduleRequestDto {
     @Positive
     private Integer userId;
 
-    @NotBlank
+    @NotBlank @Size(min = 2, max = 10)
     private String schedulePassword;
 
     @NotBlank @Size(min = 2, max = 15)

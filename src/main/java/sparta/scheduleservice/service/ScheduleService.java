@@ -32,31 +32,39 @@ public class ScheduleService {
         return this.scheduleRepository.fetchAll(fetchScheduleListConditionDto);
     }
 
+    /**
+     * 1. 일정 비밀번호 select
+     * 2. 검증 후 update
+     * @param scheduleId
+     * @param updateScheduleRequestDto
+     * @return
+     */
     @Transactional
     public int updateSchedule(int scheduleId, UpdateScheduleRequestDto updateScheduleRequestDto) {
-        // 비밀번호 검증
         String schedulePassword = this.scheduleRepository.getSchedulePw(scheduleId);
 
-        // 성공
         if (schedulePassword.equals(updateScheduleRequestDto.getSchedulePassword())) {
             return this.scheduleRepository.update(scheduleId, updateScheduleRequestDto);
         }
 
-        // 실패
         throw new PasswordMismatchException();
     }
 
+    /**
+     * 1. 일정 비밀번호 select
+     * 2. 검증 후 delete
+     * @param scheduleId
+     * @param deleteScheduleRequestDto
+     * @return
+     */
     @Transactional
     public int deleteSchedule(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto) {
-        // 비밀번호 검증
         String schedulePassword = this.scheduleRepository.getSchedulePw(scheduleId);
 
-        // 성공
         if (schedulePassword.equals(deleteScheduleRequestDto.getSchedulePassword())) {
             return this.scheduleRepository.delete(scheduleId, deleteScheduleRequestDto);
         }
 
-        // 실패
         throw new PasswordMismatchException();
     }
 

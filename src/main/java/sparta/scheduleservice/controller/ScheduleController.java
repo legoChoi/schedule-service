@@ -20,6 +20,11 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
+    /**
+     * 일정 생성
+     * @param createScheduleRequestDto
+     * @return
+     */
     @PostMapping
     public ResponseEntity<CreateScheduleResponseDto> createSchedule(
             @Valid @RequestBody CreateScheduleRequestDto createScheduleRequestDto
@@ -27,6 +32,12 @@ public class ScheduleController {
         return this.scheduleService.createSchedule(createScheduleRequestDto);
     }
 
+    /**
+     * 일정 수정
+     * @param scheduleId
+     * @param updateScheduleRequestDto
+     * @return
+     */
     @PatchMapping("/{scheduleId}")
     public int updateSchedule(
             @PathVariable("scheduleId") int scheduleId,
@@ -35,6 +46,11 @@ public class ScheduleController {
         return this.scheduleService.updateSchedule(scheduleId, updateScheduleRequestDto);
     }
 
+    /**
+     * 일정 조회 (단건)
+     * @param scheduleId
+     * @return
+     */
     @GetMapping("/{scheduleId}")
     public ResponseEntity<FetchScheduleResponseDto> fetchOne(
             @PathVariable("scheduleId") int scheduleId
@@ -42,6 +58,11 @@ public class ScheduleController {
         return this.scheduleService.fetchOne(scheduleId);
     }
 
+    /**
+     * 일정 조회 (목록)
+     * @param fetchScheduleListConditionDto
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(
             FetchScheduleListConditionDto fetchScheduleListConditionDto
@@ -49,6 +70,12 @@ public class ScheduleController {
         return this.scheduleService.fetchAll(fetchScheduleListConditionDto);
     }
 
+    /**
+     * 일정 삭제
+     * @param scheduleId
+     * @param deleteScheduleRequestDto
+     * @return
+     */
     @DeleteMapping("/{scheduleId}")
     public int deleteSchedule(
             @PathVariable("scheduleId") int scheduleId,
@@ -57,6 +84,11 @@ public class ScheduleController {
         return this.scheduleService.deleteSchedule(scheduleId, deleteScheduleRequestDto);
     }
 
+    /**
+     * 일정 조회 (목록 - 페이지네이션)
+     * @param paginateRequestDto
+     * @return
+     */
     @GetMapping("/paginate")
     public ResponseEntity<List<FetchScheduleResponseDto>> paginateSchedule(
             @Valid PaginateRequestDto paginateRequestDto
