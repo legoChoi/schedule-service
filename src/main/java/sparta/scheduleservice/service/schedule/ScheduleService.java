@@ -20,11 +20,11 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
-    public CreateScheduleResponseDto createSchedule(CreateScheduleRequestDto createScheduleRequestDto) {
+    public ResponseEntity<CreateScheduleResponseDto> createSchedule(CreateScheduleRequestDto createScheduleRequestDto) {
         return this.scheduleRepository.save(createScheduleRequestDto);
     }
 
-    public FetchScheduleResponseDto fetchOne(int scheduleId) {
+    public ResponseEntity<FetchScheduleResponseDto> fetchOne(int scheduleId) {
         return this.scheduleRepository.fetchOne(scheduleId);
     }
 

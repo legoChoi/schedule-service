@@ -10,6 +10,7 @@ public class FetchScheduleResponseDto {
 
     private int scheduleId;
     private String writer;
+    private String userName;
     private String contents;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

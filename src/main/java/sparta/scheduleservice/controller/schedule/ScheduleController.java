@@ -1,7 +1,6 @@
 package sparta.scheduleservice.controller.schedule;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @PostMapping
-    public CreateScheduleResponseDto createSchedule(
+    public ResponseEntity<CreateScheduleResponseDto> createSchedule(
             @Valid @RequestBody CreateScheduleRequestDto createScheduleRequestDto
     ) {
         return this.scheduleService.createSchedule(createScheduleRequestDto);
@@ -30,14 +29,14 @@ public class ScheduleController {
 
     @PatchMapping("/{scheduleId}")
     public int updateSchedule(
-            @Positive @PathVariable("scheduleId") int scheduleId,
+            @PathVariable("scheduleId") int scheduleId,
             @Valid @RequestBody UpdateScheduleRequestDto updateScheduleRequestDto
     ) {
         return this.scheduleService.updateSchedule(scheduleId, updateScheduleRequestDto);
     }
 
     @GetMapping("/{scheduleId}")
-    public FetchScheduleResponseDto fetchOne(
+    public ResponseEntity<FetchScheduleResponseDto> fetchOne(
             @PathVariable("scheduleId") int scheduleId
     ) {
         return this.scheduleService.fetchOne(scheduleId);

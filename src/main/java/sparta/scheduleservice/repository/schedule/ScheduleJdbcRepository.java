@@ -2,6 +2,8 @@ package sparta.scheduleservice.repository.schedule;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -31,22 +33,26 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public CreateScheduleResponseDto save(CreateScheduleRequestDto createScheduleRequestDto) {
+    public ResponseEntity<CreateScheduleResponseDto> save(CreateScheduleRequestDto createScheduleRequestDto) {
         String sql = "INSERT INTO " +
-                "schedules(user_id, schedule_password, username, contents) " +
-                "VALUES (:userId, :schedulePassword, :username, :contents)";
+                "schedules(user_id, schedule_password, writer, contents) " +
+                "VALUES (:userId, :schedulePassword, :writer, :contents)";
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(createScheduleRequestDto);
         KeyHolder key = new GeneratedKeyHolder();
         jdbcTemplate.update(sql, param, key);
 
-        return new CreateScheduleResponseDto(
+        CreateScheduleResponseDto createScheduleResponseDto = new CreateScheduleResponseDto(
                 key.getKey().intValue(),
                 createScheduleRequestDto.getUserId(),
                 createScheduleRequestDto.getSchedulePassword(),
                 createScheduleRequestDto.getWriter(),
                 createScheduleRequestDto.getContents()
         );
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED.value())
+                .body(createScheduleResponseDto);
     }
 
     @Override
@@ -75,10 +81,11 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public FetchScheduleResponseDto fetchOne(int scheduleId) {
+    public ResponseEntity<FetchScheduleResponseDto> fetchOne(int scheduleId) {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
                 "s.user_id AS userId, " +
+                "s.writer AS writer, " +
                 "u.user_name AS userName, " +
                 "s.contents AS contents, " +
                 "s.created_at AS createdAt, " +
@@ -94,7 +101,11 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
                 .newInstance(FetchScheduleResponseDto.class);
 
         try {
-            return jdbcTemplate.queryForObject(sql, param, rowMapper);
+            FetchScheduleResponseDto fetchScheduleResponseDto = jdbcTemplate.queryForObject(sql, param, rowMapper);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(fetchScheduleResponseDto);
         } catch (EmptyResultDataAccessException e) {
             throw new ScheduleNotFoundException();
         }
@@ -168,6 +179,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
                 "s.user_id AS userId, " +
+                "s.writer AS writer, " +
                 "u.user_name AS userName, " +
                 "s.contents AS contents, " +
                 "s.created_at AS createdAt, " +
