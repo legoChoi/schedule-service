@@ -1,10 +1,10 @@
-package sparta.scheduleservice.service;
+package sparta.scheduleservice.service.schedule;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sparta.scheduleservice.dto.schedule.request.*;
-import sparta.scheduleservice.repository.ScheduleRepository;
+import sparta.scheduleservice.repository.schedule.ScheduleRepository;
 import sparta.scheduleservice.dto.schedule.response.CreateScheduleResponseDto;
 import sparta.scheduleservice.dto.schedule.response.FetchScheduleResponseDto;
 

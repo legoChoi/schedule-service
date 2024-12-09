@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class FetchScheduleResponseDto {
 
     private int scheduleId;
-    private String userName;
+    private String writer;
     private String contents;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

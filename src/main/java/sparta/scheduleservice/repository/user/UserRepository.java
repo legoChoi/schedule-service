@@ -1,4 +1,4 @@
-package sparta.scheduleservice.repository;
+package sparta.scheduleservice.repository.user;
 
 import sparta.scheduleservice.dto.user.request.CreateUserRequestDto;
 import sparta.scheduleservice.dto.user.request.DeleteUserReqDto;

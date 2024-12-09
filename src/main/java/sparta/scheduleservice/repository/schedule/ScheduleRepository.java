@@ -1,4 +1,4 @@
-package sparta.scheduleservice.repository;
+package sparta.scheduleservice.repository.schedule;
 
 import org.springframework.http.ResponseEntity;
 import sparta.scheduleservice.dto.schedule.request.*;

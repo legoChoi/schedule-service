@@ -1,4 +1,4 @@
-package sparta.scheduleservice.repository;
+package sparta.scheduleservice.repository.schedule;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -88,7 +88,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
 
     @Override
     public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
-        String userName = fetchScheduleListConditionDto.getUserName();
+        String writer = fetchScheduleListConditionDto.getWriter();
         String updatedAt = fetchScheduleListConditionDto.getUpdatedAt();
         int userId = fetchScheduleListConditionDto.getUserId();
 
@@ -99,7 +99,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         boolean flag = false;
 
         // 셋 중 하나라도 있으면 where 절 추가
-        if (userId != 0 || StringUtils.hasText(userName) || StringUtils.hasText(updatedAt)) {
+        if (userId != 0 || StringUtils.hasText(writer) || StringUtils.hasText(updatedAt)) {
             whereSql += "WHERE ";
         }
 
@@ -110,11 +110,11 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         }
 
         // writer 있으면 조건에 추가
-        if (StringUtils.hasText(userName)) {
+        if (StringUtils.hasText(writer)) {
             if (flag) {
                 whereSql += "AND ";
             }
-            whereSql += "writer LIKE CONCAT('%', :writer, '%') ";
+            whereSql += "s.writer LIKE CONCAT('%', :writer, '%') ";
             flag = true;
         }
 
@@ -129,6 +129,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
                 "s.user_id AS userId, " +
+                "s.writer AS writer, " +
                 "u.user_name AS userName, " +
                 "s.contents AS contents, " +
                 "s.created_at AS createdAt, " +
