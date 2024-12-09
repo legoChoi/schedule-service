@@ -21,8 +21,8 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @PostMapping
-    public CreateScheduleResponseDto createSchedule(
-            @RequestBody CreateScheduleRequestDto createScheduleRequestDto
+    public ResponseEntity<CreateScheduleResponseDto> createSchedule(
+            @Valid @RequestBody CreateScheduleRequestDto createScheduleRequestDto
     ) {
         return this.scheduleService.createSchedule(createScheduleRequestDto);
     }
@@ -30,13 +30,13 @@ public class ScheduleController {
     @PatchMapping("/{scheduleId}")
     public int updateSchedule(
             @PathVariable("scheduleId") int scheduleId,
-            @RequestBody UpdateScheduleRequestDto updateScheduleRequestDto
+            @Valid @RequestBody UpdateScheduleRequestDto updateScheduleRequestDto
     ) {
         return this.scheduleService.updateSchedule(scheduleId, updateScheduleRequestDto);
     }
 
     @GetMapping("/{scheduleId}")
-    public FetchScheduleResponseDto fetchOne(
+    public ResponseEntity<FetchScheduleResponseDto> fetchOne(
             @PathVariable("scheduleId") int scheduleId
     ) {
         return this.scheduleService.fetchOne(scheduleId);
@@ -52,7 +52,7 @@ public class ScheduleController {
     @DeleteMapping("/{scheduleId}")
     public int deleteSchedule(
             @PathVariable("scheduleId") int scheduleId,
-            @RequestBody DeleteScheduleRequestDto deleteScheduleRequestDto
+            @Valid @RequestBody DeleteScheduleRequestDto deleteScheduleRequestDto
     ) {
         return this.scheduleService.deleteSchedule(scheduleId, deleteScheduleRequestDto);
     }
@@ -61,7 +61,6 @@ public class ScheduleController {
     public ResponseEntity<List<FetchScheduleResponseDto>> paginateSchedule(
             @Valid PaginateRequestDto paginateRequestDto
     ) {
-
         return this.scheduleService.paginateSchedule(paginateRequestDto);
     }
 }

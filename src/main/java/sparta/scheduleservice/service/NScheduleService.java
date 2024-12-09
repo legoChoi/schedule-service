@@ -2,7 +2,7 @@ package sparta.scheduleservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sparta.scheduleservice.repository.NScheduleRepository;
+import sparta.scheduleservice.repository.nschedule.NScheduleRepository;
 import sparta.scheduleservice.dto.nschedule.request.CreateNScheduleRequestDto;
 import sparta.scheduleservice.dto.nschedule.response.CreateNScheduleResponseDto;
 

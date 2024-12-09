@@ -8,8 +8,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CreateScheduleResponseDto {
 
-    private int scheduleId;
-    private int userId;
+    private Integer scheduleId;
+    private Integer userId;
     private String schedulePassword;
     private String writer;
     private String contents;

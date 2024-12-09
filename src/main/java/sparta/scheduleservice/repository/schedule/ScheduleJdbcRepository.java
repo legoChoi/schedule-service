@@ -1,6 +1,8 @@
-package sparta.scheduleservice.repository;
+package sparta.scheduleservice.repository.schedule;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import sparta.scheduleservice.dto.schedule.request.*;
 import sparta.scheduleservice.dto.schedule.response.*;
+import sparta.scheduleservice.exception.schedule.exception.exceptions.ScheduleNotFoundException;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -29,44 +32,59 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public CreateScheduleResponseDto save(CreateScheduleRequestDto createScheduleRequestDto) {
+    public ResponseEntity<CreateScheduleResponseDto> save(CreateScheduleRequestDto createScheduleRequestDto) {
         String sql = "INSERT INTO " +
-                "schedules(user_id, schedule_password, username, contents) " +
-                "VALUES (:userId, :schedulePassword, :username, :contents)";
+                "schedules(user_id, schedule_password, writer, contents) " +
+                "VALUES (:userId, :schedulePassword, :writer, :contents)";
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(createScheduleRequestDto);
         KeyHolder key = new GeneratedKeyHolder();
         jdbcTemplate.update(sql, param, key);
 
-        return new CreateScheduleResponseDto(
+        CreateScheduleResponseDto createScheduleResponseDto = new CreateScheduleResponseDto(
                 key.getKey().intValue(),
                 createScheduleRequestDto.getUserId(),
                 createScheduleRequestDto.getSchedulePassword(),
                 createScheduleRequestDto.getWriter(),
                 createScheduleRequestDto.getContents()
         );
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED.value())
+                .body(createScheduleResponseDto);
     }
 
     @Override
     public int update(int scheduleId, UpdateScheduleRequestDto updateScheduleRequestDto) {
         String sql = "UPDATE schedules " +
                 "SET writer = :writer, contents = :contents " +
-                "WHERE schedule_id = :scheduleId AND schedule_password LIKE :schedulePassword";
+                "WHERE schedule_id = :scheduleId";
 
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("writer", updateScheduleRequestDto.getWriter())
                 .addValue("contents", updateScheduleRequestDto.getContents())
-                .addValue("scheduleId", scheduleId)
-                .addValue("schedulePassword", updateScheduleRequestDto.getSchedulePassword());
+                .addValue("scheduleId", scheduleId);
 
         return jdbcTemplate.update(sql, param);
     }
 
     @Override
-    public FetchScheduleResponseDto fetchOne(int scheduleId) {
+    public int delete(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto) {
+        String sql = "DELETE FROM schedules WHERE schedule_id = :scheduleId AND schedule_password LIKE :schedulePassword";
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("scheduleId", scheduleId)
+                .addValue("schedulePassword", deleteScheduleRequestDto.getSchedulePassword());
+
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
+    public ResponseEntity<FetchScheduleResponseDto> fetchOne(int scheduleId) {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
                 "s.user_id AS userId, " +
+                "s.writer AS writer, " +
                 "u.user_name AS userName, " +
                 "s.contents AS contents, " +
                 "s.created_at AS createdAt, " +
@@ -81,16 +99,22 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         RowMapper<FetchScheduleResponseDto> rowMapper = BeanPropertyRowMapper
                 .newInstance(FetchScheduleResponseDto.class);
 
-        // 예외 처리 필수
+        try {
+            FetchScheduleResponseDto fetchScheduleResponseDto = jdbcTemplate.queryForObject(sql, param, rowMapper);
 
-        return jdbcTemplate.queryForObject(sql, param, rowMapper);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(fetchScheduleResponseDto);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ScheduleNotFoundException();
+        }
     }
 
     @Override
     public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
-        String userName = fetchScheduleListConditionDto.getUserName();
+        String writer = fetchScheduleListConditionDto.getWriter();
         String updatedAt = fetchScheduleListConditionDto.getUpdatedAt();
-        int userId = fetchScheduleListConditionDto.getUserId();
+        Integer userId = fetchScheduleListConditionDto.getUserId();
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(fetchScheduleListConditionDto);
 
@@ -99,22 +123,22 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         boolean flag = false;
 
         // 셋 중 하나라도 있으면 where 절 추가
-        if (userId != 0 || StringUtils.hasText(userName) || StringUtils.hasText(updatedAt)) {
+        if (userId != null || StringUtils.hasText(writer) || StringUtils.hasText(updatedAt)) {
             whereSql += "WHERE ";
         }
 
         // userId가 있으면 조건 추가
-        if (userId != 0) {
+        if (userId != null) {
             whereSql += "u.user_id = :userId ";
             flag = true;
         }
 
         // writer 있으면 조건에 추가
-        if (StringUtils.hasText(userName)) {
+        if (StringUtils.hasText(writer)) {
             if (flag) {
                 whereSql += "AND ";
             }
-            whereSql += "writer LIKE CONCAT('%', :writer, '%') ";
+            whereSql += "s.writer LIKE CONCAT('%', :writer, '%') ";
             flag = true;
         }
 
@@ -129,6 +153,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
                 "s.user_id AS userId, " +
+                "s.writer AS writer, " +
                 "u.user_name AS userName, " +
                 "s.contents AS contents, " +
                 "s.created_at AS createdAt, " +
@@ -149,21 +174,11 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public int delete(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto) {
-        String sql = "DELETE FROM schedules WHERE schedule_id = :scheduleId AND schedule_password LIKE :schedulePassword";
-
-        SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("scheduleId", scheduleId)
-                .addValue("schedulePassword", deleteScheduleRequestDto.schedulePassword());
-
-        return jdbcTemplate.update(sql, param);
-    }
-
-    @Override
     public ResponseEntity<List<FetchScheduleResponseDto>> paginate(PaginateRequestDto paginateRequestDto) {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
                 "s.user_id AS userId, " +
+                "s.writer AS writer, " +
                 "u.user_name AS userName, " +
                 "s.contents AS contents, " +
                 "s.created_at AS createdAt, " +
@@ -172,8 +187,6 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
                 "INNER JOIN users u ON s.user_id = u.user_id " +
                 "ORDER BY s.updated_at DESC " +
                 "LIMIT :page, :size";
-
-        paginateRequestDto.setPage(paginateRequestDto.getPage() - 1);
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(paginateRequestDto);
 
@@ -185,5 +198,19 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         return ResponseEntity
                 .ok()
                 .body(result);
+    }
+
+    @Override
+    public String getSchedulePw(int scheduleId) {
+        String sql = "SELECT schedule_password FROM schedules WHERE schedule_id = :scheduleId";
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("scheduleId", scheduleId);
+
+        try {
+            return jdbcTemplate.queryForObject(sql, param, String.class);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ScheduleNotFoundException();
+        }
     }
 }

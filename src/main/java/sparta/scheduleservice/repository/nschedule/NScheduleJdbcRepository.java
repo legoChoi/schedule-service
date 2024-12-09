@@ -1,4 +1,4 @@
-package sparta.scheduleservice.repository;
+package sparta.scheduleservice.repository.nschedule;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;

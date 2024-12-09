@@ -3,7 +3,8 @@ package sparta.scheduleservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import sparta.scheduleservice.repository.UserRepository;
+import sparta.scheduleservice.dto.user.request.DeleteUserReqDto;
+import sparta.scheduleservice.repository.user.UserRepository;
 import sparta.scheduleservice.dto.user.request.CreateUserRequestDto;
 import sparta.scheduleservice.dto.user.response.CreateUserResponseDto;
 
@@ -16,5 +17,9 @@ public class UserService {
 
     public CreateUserResponseDto createUser(CreateUserRequestDto createUserDto) {
         return this.userRepository.save(createUserDto);
+    }
+
+    public void deleteUser(DeleteUserReqDto deleteUserReqDto) {
+        this.userRepository.delete(deleteUserReqDto);
     }
 }
