@@ -2,12 +2,14 @@ package sparta.scheduleservice.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sparta.scheduleservice.dto.user.request.CreateUserRequestDto;
+import sparta.scheduleservice.dto.user.request.DeleteUserReqDto;
 import sparta.scheduleservice.dto.user.response.CreateUserResponseDto;
 
 import javax.sql.DataSource;
@@ -39,5 +41,14 @@ public class UserJdbcRepository implements UserRepository {
                 createUserDto.getUserName(),
                 createUserDto.getUserEmail()
         );
+    }
+
+    @Override
+    public void delete(DeleteUserReqDto deleteUserReqDto) {
+        String sql = "DELETE FROM users WHERE user_id = :userId";
+
+        SqlParameterSource param = new BeanPropertySqlParameterSource(deleteUserReqDto);
+
+        jdbcTemplate.update(sql, param);
     }
 }

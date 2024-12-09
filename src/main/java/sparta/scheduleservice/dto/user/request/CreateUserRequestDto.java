@@ -8,9 +8,10 @@ import lombok.Setter;
 @Getter @Setter
 public class CreateUserRequestDto {
 
-    @NotNull @NotBlank @Size(min = 3, max = 10)
+    @NotBlank @Size(min = 3, max = 10)
     private String userName;
 
-    @NotNull @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            message = "올바른 이메일 형식이 아닙니다.")
     private String userEmail;
 }
