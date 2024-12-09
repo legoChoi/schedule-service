@@ -73,7 +73,11 @@ public class ScheduleController {
     public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(
             FetchScheduleListConditionDto fetchScheduleListConditionDto
     ) {
-        return this.scheduleService.fetchAll(fetchScheduleListConditionDto);
+        List<FetchScheduleResponseDto> data = this.scheduleService.fetchAll(fetchScheduleListConditionDto);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(data);
     }
 
     /**

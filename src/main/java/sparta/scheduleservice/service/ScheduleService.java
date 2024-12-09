@@ -28,7 +28,7 @@ public class ScheduleService {
         return this.scheduleRepository.fetchOne(scheduleId);
     }
 
-    public ResponseEntity<List<FetchScheduleResponseDto>> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
+    public List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
         return this.scheduleRepository.fetchAll(fetchScheduleListConditionDto);
     }
 
