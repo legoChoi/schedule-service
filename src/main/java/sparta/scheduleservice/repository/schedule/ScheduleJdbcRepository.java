@@ -166,7 +166,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public ResponseEntity<List<FetchScheduleResponseDto>> paginate(PaginateRequestDto paginateRequestDto) {
+    public List<FetchScheduleResponseDto> paginate(PaginateRequestDto paginateRequestDto) {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
                 "s.user_id AS userId, " +
@@ -185,11 +185,7 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         RowMapper<FetchScheduleResponseDto> rowMapper = BeanPropertyRowMapper
                 .newInstance(FetchScheduleResponseDto.class);
 
-        List<FetchScheduleResponseDto> result = jdbcTemplate.query(sql, param, rowMapper);
-
-        return ResponseEntity
-                .ok()
-                .body(result);
+        return jdbcTemplate.query(sql, param, rowMapper);
     }
 
     @Override

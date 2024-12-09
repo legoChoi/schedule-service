@@ -103,6 +103,10 @@ public class ScheduleController {
     public ResponseEntity<List<FetchScheduleResponseDto>> paginateSchedule(
             @Valid PaginateRequestDto paginateRequestDto
     ) {
-        return this.scheduleService.paginateSchedule(paginateRequestDto);
+        List<FetchScheduleResponseDto> data = this.scheduleService.paginateSchedule(paginateRequestDto);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(data);
     }
 }

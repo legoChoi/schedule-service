@@ -68,7 +68,7 @@ public class ScheduleService {
         throw new PasswordMismatchException();
     }
 
-    public ResponseEntity<List<FetchScheduleResponseDto>> paginateSchedule(PaginateRequestDto paginateRequestDto) {
+    public List<FetchScheduleResponseDto> paginateSchedule(PaginateRequestDto paginateRequestDto) {
         return this.scheduleRepository.paginate(paginateRequestDto);
     }
 }

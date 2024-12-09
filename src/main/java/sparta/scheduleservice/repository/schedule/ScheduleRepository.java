@@ -13,6 +13,6 @@ public interface ScheduleRepository {
     List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto);
     int update(int scheduleId, UpdateScheduleRequestDto updateScheduleRequestDto);
     int delete(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto);
-    ResponseEntity<List<FetchScheduleResponseDto>> paginate(PaginateRequestDto paginateRequestDto);
+    List<FetchScheduleResponseDto> paginate(PaginateRequestDto paginateRequestDto);
     String getSchedulePw(int scheduleId);
 }
