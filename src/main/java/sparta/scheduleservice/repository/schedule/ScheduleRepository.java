@@ -14,4 +14,5 @@ public interface ScheduleRepository {
     int update(int scheduleId, UpdateScheduleRequestDto updateScheduleRequestDto);
     int delete(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto);
     ResponseEntity<List<FetchScheduleResponseDto>> paginate(PaginateRequestDto paginateRequestDto);
+    String getSchedulePw(int scheduleId);
 }

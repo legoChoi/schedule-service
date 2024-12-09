@@ -51,13 +51,12 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     public int update(int scheduleId, UpdateScheduleRequestDto updateScheduleRequestDto) {
         String sql = "UPDATE schedules " +
                 "SET writer = :writer, contents = :contents " +
-                "WHERE schedule_id = :scheduleId AND schedule_password LIKE :schedulePassword";
+                "WHERE schedule_id = :scheduleId";
 
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("writer", updateScheduleRequestDto.getWriter())
                 .addValue("contents", updateScheduleRequestDto.getContents())
-                .addValue("scheduleId", scheduleId)
-                .addValue("schedulePassword", updateScheduleRequestDto.getSchedulePassword());
+                .addValue("scheduleId", scheduleId);
 
         return jdbcTemplate.update(sql, param);
     }
@@ -186,5 +185,15 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         return ResponseEntity
                 .ok()
                 .body(result);
+    }
+
+    @Override
+    public String getSchedulePw(int scheduleId) {
+        String sql = "SELECT schedule_password FROM schedules WHERE schedule_id = :scheduleId";
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("scheduleId", scheduleId);
+
+        return jdbcTemplate.queryForObject(sql, param, String.class);
     }
 }
