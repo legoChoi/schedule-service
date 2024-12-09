@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class FetchScheduleResponseDto {
 
-    private int scheduleId;
+    private Integer scheduleId;
     private String writer;
     private String userName;
     private String contents;
