@@ -1,6 +1,7 @@
 package sparta.scheduleservice.repository.schedule;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import sparta.scheduleservice.dto.schedule.request.*;
 import sparta.scheduleservice.dto.schedule.response.*;
+import sparta.scheduleservice.shared.exception.schedule.exception.ScheduleNotFoundException;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -62,6 +64,17 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
+    public int delete(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto) {
+        String sql = "DELETE FROM schedules WHERE schedule_id = :scheduleId AND schedule_password LIKE :schedulePassword";
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("scheduleId", scheduleId)
+                .addValue("schedulePassword", deleteScheduleRequestDto.getSchedulePassword());
+
+        return jdbcTemplate.update(sql, param);
+    }
+
+    @Override
     public FetchScheduleResponseDto fetchOne(int scheduleId) {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
@@ -80,9 +93,11 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         RowMapper<FetchScheduleResponseDto> rowMapper = BeanPropertyRowMapper
                 .newInstance(FetchScheduleResponseDto.class);
 
-        // 예외 처리 필수
-
-        return jdbcTemplate.queryForObject(sql, param, rowMapper);
+        try {
+            return jdbcTemplate.queryForObject(sql, param, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ScheduleNotFoundException();
+        }
     }
 
     @Override
@@ -149,17 +164,6 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
     }
 
     @Override
-    public int delete(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto) {
-        String sql = "DELETE FROM schedules WHERE schedule_id = :scheduleId AND schedule_password LIKE :schedulePassword";
-
-        SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("scheduleId", scheduleId)
-                .addValue("schedulePassword", deleteScheduleRequestDto.getSchedulePassword());
-
-        return jdbcTemplate.update(sql, param);
-    }
-
-    @Override
     public ResponseEntity<List<FetchScheduleResponseDto>> paginate(PaginateRequestDto paginateRequestDto) {
         String sql = "SELECT " +
                 "s.schedule_id AS scheduleId, " +
@@ -194,6 +198,10 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("scheduleId", scheduleId);
 
-        return jdbcTemplate.queryForObject(sql, param, String.class);
+        try {
+            return jdbcTemplate.queryForObject(sql, param, String.class);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ScheduleNotFoundException();
+        }
     }
 }
