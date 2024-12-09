@@ -1,4 +1,6 @@
-package sparta.scheduleservice.shared.exception.schedule.exception;
+package sparta.scheduleservice.exception.schedule.exception.exceptions;
+
+import sparta.scheduleservice.exception.schedule.exception.ScheduleExceptionMessages;
 
 public class PasswordMismatchException extends RuntimeException {
     public PasswordMismatchException() {

@@ -1,9 +1,8 @@
 package sparta.scheduleservice.dto.schedule.request;
 
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
+@Getter
 public class FetchScheduleListConditionDto {
 
     private int userId;

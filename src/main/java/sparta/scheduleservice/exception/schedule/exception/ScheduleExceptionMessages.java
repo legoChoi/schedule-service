@@ -1,4 +1,4 @@
-package sparta.scheduleservice.shared.exception.schedule.exception;
+package sparta.scheduleservice.exception.schedule.exception;
 
 
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package sparta.scheduleservice.service.schedule;
+package sparta.scheduleservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,7 @@ import sparta.scheduleservice.dto.schedule.request.*;
 import sparta.scheduleservice.repository.schedule.ScheduleRepository;
 import sparta.scheduleservice.dto.schedule.response.CreateScheduleResponseDto;
 import sparta.scheduleservice.dto.schedule.response.FetchScheduleResponseDto;
-import sparta.scheduleservice.shared.exception.schedule.exception.PasswordMismatchException;
+import sparta.scheduleservice.exception.schedule.exception.exceptions.PasswordMismatchException;
 
 import java.util.List;
 

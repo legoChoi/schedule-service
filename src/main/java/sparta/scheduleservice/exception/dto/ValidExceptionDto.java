@@ -1,4 +1,4 @@
-package sparta.scheduleservice.shared.exception.dto;
+package sparta.scheduleservice.exception.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ValidExceptionDto {
     private int code;
-    private List<FieldErrorDto> fieldErrors;
+    private List<ValidFieldErrorDto> fieldErrors;
 }
 
 

@@ -3,7 +3,6 @@ package sparta.scheduleservice.repository.schedule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import sparta.scheduleservice.dto.schedule.request.*;
 import sparta.scheduleservice.dto.schedule.response.*;
-import sparta.scheduleservice.shared.exception.schedule.exception.ScheduleNotFoundException;
+import sparta.scheduleservice.exception.schedule.exception.exceptions.ScheduleNotFoundException;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -188,8 +187,6 @@ public class ScheduleJdbcRepository implements ScheduleRepository {
                 "INNER JOIN users u ON s.user_id = u.user_id " +
                 "ORDER BY s.updated_at DESC " +
                 "LIMIT :page, :size";
-
-        paginateRequestDto.setPage(paginateRequestDto.getPage() - 1);
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(paginateRequestDto);
 

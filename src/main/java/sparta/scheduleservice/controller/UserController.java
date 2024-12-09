@@ -1,4 +1,4 @@
-package sparta.scheduleservice.controller.user;
+package sparta.scheduleservice.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import sparta.scheduleservice.dto.user.request.CreateUserRequestDto;
 import sparta.scheduleservice.dto.user.request.DeleteUserReqDto;
 import sparta.scheduleservice.dto.user.response.CreateUserResponseDto;
-import sparta.scheduleservice.service.user.UserService;
+import sparta.scheduleservice.service.UserService;
 
 @Slf4j
 @RestController

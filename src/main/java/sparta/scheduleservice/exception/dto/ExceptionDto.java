@@ -1,4 +1,4 @@
-package sparta.scheduleservice.shared.exception.dto;
+package sparta.scheduleservice.exception.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

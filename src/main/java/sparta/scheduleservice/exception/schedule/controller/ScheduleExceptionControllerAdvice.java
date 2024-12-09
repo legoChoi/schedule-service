@@ -1,13 +1,13 @@
-package sparta.scheduleservice.shared.exception.schedule.controller;
+package sparta.scheduleservice.exception.schedule.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import sparta.scheduleservice.controller.schedule.ScheduleController;
-import sparta.scheduleservice.shared.exception.dto.ExceptionDto;
-import sparta.scheduleservice.shared.exception.schedule.exception.PasswordMismatchException;
-import sparta.scheduleservice.shared.exception.schedule.exception.ScheduleNotFoundException;
+import sparta.scheduleservice.controller.ScheduleController;
+import sparta.scheduleservice.exception.dto.ExceptionDto;
+import sparta.scheduleservice.exception.schedule.exception.exceptions.PasswordMismatchException;
+import sparta.scheduleservice.exception.schedule.exception.exceptions.ScheduleNotFoundException;
 
 @RestControllerAdvice(assignableTypes = ScheduleController.class)
 public class ScheduleExceptionControllerAdvice {

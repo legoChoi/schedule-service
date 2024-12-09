@@ -1,4 +1,4 @@
-package sparta.scheduleservice.controller.nschedule;
+package sparta.scheduleservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sparta.scheduleservice.dto.nschedule.request.CreateNScheduleRequestDto;
 import sparta.scheduleservice.dto.nschedule.response.CreateNScheduleResponseDto;
-import sparta.scheduleservice.service.nschedule.NScheduleService;
+import sparta.scheduleservice.service.NScheduleService;
 
 @Slf4j
 @RestController

@@ -1,13 +1,12 @@
-package sparta.scheduleservice.shared.exception.dto;
+package sparta.scheduleservice.exception.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
 @AllArgsConstructor
-public class FieldErrorDto {
+public class ValidFieldErrorDto {
     private String field;
     private Object input;
     private String message;

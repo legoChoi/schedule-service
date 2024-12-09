@@ -2,9 +2,8 @@ package sparta.scheduleservice.dto.schedule.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
+@Getter
 public class DeleteScheduleRequestDto {
 
     @NotBlank

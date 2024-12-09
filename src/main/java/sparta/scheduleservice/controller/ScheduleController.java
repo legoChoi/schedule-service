@@ -1,4 +1,4 @@
-package sparta.scheduleservice.controller.schedule;
+package sparta.scheduleservice.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import sparta.scheduleservice.dto.schedule.request.*;
 import sparta.scheduleservice.dto.schedule.response.CreateScheduleResponseDto;
 import sparta.scheduleservice.dto.schedule.response.FetchScheduleResponseDto;
-import sparta.scheduleservice.service.schedule.ScheduleService;
+import sparta.scheduleservice.service.ScheduleService;
 
 import java.util.List;
 

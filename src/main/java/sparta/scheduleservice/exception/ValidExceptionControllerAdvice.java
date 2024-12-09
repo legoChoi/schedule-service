@@ -1,11 +1,11 @@
-package sparta.scheduleservice.shared.exception;
+package sparta.scheduleservice.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import sparta.scheduleservice.shared.exception.dto.FieldErrorDto;
-import sparta.scheduleservice.shared.exception.dto.ValidExceptionDto;
+import sparta.scheduleservice.exception.dto.ValidFieldErrorDto;
+import sparta.scheduleservice.exception.dto.ValidExceptionDto;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ public class ValidExceptionControllerAdvice {
     @ExceptionHandler
     public ResponseEntity<ValidExceptionDto> checkValidRequestArgs(MethodArgumentNotValidException e) {
 
-        List<FieldErrorDto> fieldErrors = e.getBindingResult()
+        List<ValidFieldErrorDto> fieldErrors = e.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(fieldError -> new FieldErrorDto(
+                .map(fieldError -> new ValidFieldErrorDto(
                         fieldError.getField(),
                         fieldError.getRejectedValue(),
                         fieldError.getDefaultMessage()

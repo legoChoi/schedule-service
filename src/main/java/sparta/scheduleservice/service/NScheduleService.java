@@ -1,4 +1,4 @@
-package sparta.scheduleservice.service.nschedule;
+package sparta.scheduleservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
