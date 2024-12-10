@@ -19,6 +19,9 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * 유저 생성 API
+     */
     @PostMapping
     public ResponseEntity<CreateUserResponseDto> createUser(
             @Valid @RequestBody CreateUserRequestDto createUserDto
@@ -29,6 +32,9 @@ public class UserController {
                 .body(data);
     }
 
+    /**
+     * 유저 삭제 API - 작성된 스케줄도 삭제
+     */
     @DeleteMapping
     public void deleteUser(
             @Valid @RequestBody DeleteUserReqDto deleteUserDto
