@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import sparta.scheduleservice.dto.schedule.request.*;
 import sparta.scheduleservice.dto.schedule.response.CreateScheduleResponseDto;
 import sparta.scheduleservice.dto.schedule.response.FetchScheduleResponseDto;
-import sparta.scheduleservice.service.ScheduleService;
+import sparta.scheduleservice.service.schedule.ScheduleServiceImpl;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduleController {
 
-    private final ScheduleService scheduleService;
+    private final ScheduleServiceImpl scheduleService;
 
     /**
      * 일정 생성

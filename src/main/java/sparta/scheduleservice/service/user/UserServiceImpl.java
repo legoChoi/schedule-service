@@ -1,4 +1,4 @@
-package sparta.scheduleservice.service;
+package sparta.scheduleservice.service.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,14 +11,16 @@ import sparta.scheduleservice.dto.user.response.CreateUserResponseDto;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    @Override
     public CreateUserResponseDto createUser(CreateUserRequestDto createUserDto) {
         return this.userRepository.save(createUserDto);
     }
 
+    @Override
     public void deleteUser(DeleteUserReqDto deleteUserReqDto) {
         this.userRepository.delete(deleteUserReqDto);
     }

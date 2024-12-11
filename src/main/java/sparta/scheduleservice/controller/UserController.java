@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import sparta.scheduleservice.dto.user.request.CreateUserRequestDto;
 import sparta.scheduleservice.dto.user.request.DeleteUserReqDto;
 import sparta.scheduleservice.dto.user.response.CreateUserResponseDto;
-import sparta.scheduleservice.service.UserService;
+import sparta.scheduleservice.service.user.UserServiceImpl;
 
 @Slf4j
 @RestController
@@ -17,7 +17,7 @@ import sparta.scheduleservice.service.UserService;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     /**
      * 유저 생성 API

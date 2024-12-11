@@ -1,8 +1,7 @@
-package sparta.scheduleservice.service;
+package sparta.scheduleservice.service.schedule;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sparta.scheduleservice.dto.schedule.request.*;
@@ -16,29 +15,26 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ScheduleService {
+public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
+    @Override
     public CreateScheduleResponseDto createSchedule(CreateScheduleRequestDto createScheduleRequestDto) {
         return this.scheduleRepository.save(createScheduleRequestDto);
     }
 
+    @Override
     public FetchScheduleResponseDto fetchOne(int scheduleId) {
         return this.scheduleRepository.fetchOne(scheduleId);
     }
 
+    @Override
     public List<FetchScheduleResponseDto> fetchAll(FetchScheduleListConditionDto fetchScheduleListConditionDto) {
         return this.scheduleRepository.fetchAll(fetchScheduleListConditionDto);
     }
 
-    /**
-     * 1. 일정 비밀번호 select
-     * 2. 검증 후 update
-     * @param scheduleId
-     * @param updateScheduleRequestDto
-     * @return
-     */
+    @Override
     @Transactional
     public int updateSchedule(int scheduleId, UpdateScheduleRequestDto updateScheduleRequestDto) {
         String schedulePassword = this.scheduleRepository.getSchedulePw(scheduleId);
@@ -50,13 +46,7 @@ public class ScheduleService {
         throw new PasswordMismatchException();
     }
 
-    /**
-     * 1. 일정 비밀번호 select
-     * 2. 검증 후 delete
-     * @param scheduleId
-     * @param deleteScheduleRequestDto
-     * @return
-     */
+    @Override
     @Transactional
     public int deleteSchedule(int scheduleId, DeleteScheduleRequestDto deleteScheduleRequestDto) {
         String schedulePassword = this.scheduleRepository.getSchedulePw(scheduleId);
@@ -68,6 +58,7 @@ public class ScheduleService {
         throw new PasswordMismatchException();
     }
 
+    @Override
     public List<FetchScheduleResponseDto> paginateSchedule(PaginateRequestDto paginateRequestDto) {
         return this.scheduleRepository.paginate(paginateRequestDto);
     }
